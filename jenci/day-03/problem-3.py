@@ -4,18 +4,14 @@
 
 # Single-line input with a custom trailing character: #
 with open("input.txt", "r") as f:
-    s = f.read().strip() + '#'
-    # s = f.read().strip().__add__('#')
+    s = f.read().strip()
 
-# total_delivered = 0
 # Create a set to store visited coordinates
 coords = [(0,0)]
-already_visited = set()
+already_visited = {coords[0]}
+
 # Iterate through the input string
 for ch in s:
-    if coords[0] not in already_visited:
-        already_visited.add(coords[0])
-        # total_delivered += 1
     if ch == '^':
         coords[0] = (coords[0][0], coords[0][1] + 1)
     if ch == 'v':
@@ -24,7 +20,8 @@ for ch in s:
         coords[0] = (coords[0][0] + 1, coords[0][1])
     if ch == '<':
         coords[0] = (coords[0][0] - 1, coords[0][1])
-    if ch == '#':
-        break
+    if coords[0] not in already_visited:
+        already_visited.add(coords[0])
 
+# Print the number of unique coordinates visited
 print(len(already_visited))
